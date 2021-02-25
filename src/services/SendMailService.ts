@@ -22,11 +22,9 @@ class SendMailService {
         });
     }
 
-
-
     async execute(to: string, subject: string, body: string) {
 
-        const npsPath = resolve(__dirname, "../", "views", "emails", "npsMail.hbs")
+        const npsPath = resolve(__dirname, "../", "views", "emails", "npsMail.hbs");
         const templateFileContent = fs.readFileSync(npsPath).toString("utf8");
         const mailTemplateParse = handlebars.compile(templateFileContent);
 
@@ -39,7 +37,7 @@ class SendMailService {
         const message = await this.client.sendMail({
             to,
             subject,
-            html: body,
+            html,
             from: "NPS <noreply@nps.com.br>",
         });
 
