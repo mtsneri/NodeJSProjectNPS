@@ -30,7 +30,14 @@ class SendMailController {
         }
 
         // Save informations in surveyUser table
+        const surveyUser = surveysUsersRepository.create({
+            user_id: userAlreadyExists.id,
+            survey_id,
+        });
+        await surveysUsersRepository.save(surveyUser);
         // Send email to user
+
+        return response.json(surveyUser);
 
     }
 
