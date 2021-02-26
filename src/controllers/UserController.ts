@@ -7,6 +7,19 @@ class UserController {
     async create(request: Request, response: Response) {
         const { name, email } = request.body;
 
+        const schema = yup.object().shape({
+            name: yup.string().required("The label name is required"),
+            email: yup.string().email().required("The label email is required"),
+        });
+
+        try {
+            await schema.validate(request.body, { abortEarly: false });
+        } catch (error) {
+            return response.status(400).json({
+                error: error,
+            });
+        }
+
         const usersRepository = getCustomRepository(UsersRepository);
 
         const userAlreadyExists = await usersRepository.findOne({
